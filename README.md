@@ -24,11 +24,11 @@ __Android 版原作者[mrwutong](https://github.com/mrwutong)的话__
 请参照：[申请密钥Android定位SDK](http://developer.baidu.com/map/index.php?title=android-locsdk/guide/key)
 
 >>每一个独立包名的App 对应一个AK，不可混用
-
+  
 ####二，安装插件````
 
 ```shell
-cordova plugin add https://github.com/aruis/cordova-plugin-baidumaplocation --variable ANDROID_KEY="<API_KEY>"
+cordova plugin add cordova-plugin-baidumaplocation --variable ANDROID_KEY="<API_KEY>"
 //此处的API_KEY来自于第一步，直接替换<API_KEY>，也可以最后跟 --save 参数，将插件信息保存到config.xml中
 ```
 
