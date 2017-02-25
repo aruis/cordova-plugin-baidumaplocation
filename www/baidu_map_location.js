@@ -1,83 +1,57 @@
-/*
- *
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- *
-*/
+var exec = require('cordova/exec');
 
-var argscheck = require('cordova/argscheck'),
-    channel = require('cordova/channel'),
-    utils = require('cordova/utils'),
-    exec = require('cordova/exec'),
-    cordova = require('cordova');
+var baidumap_location = {
+    getCurrentPosition: function (successCallback, errorCallback, options) {
 
-channel.createSticky('onCordovaInfoReady');
-// Tell cordova channel to wait on the CordovaInfoReady event
-channel.waitForInitialization('onCordovaInfoReady');
+        // Timer var that will fire an error callback if no position is retrieved from native
+        // before the "timeout" param provided expires
+        var timeoutTimer = {timer: null};
 
-/**
- * This represents the mobile device, and provides properties for inspecting the model, version, UUID of the
- * phone, etc.
- * @constructor
- */
-function Device() {
-    this.available = false;
-    this.platform = null;
-    this.version = null;
-    this.uuid = null;
-    this.cordova = null;
-    this.model = null;
-    this.manufacturer = null;
-    this.isVirtual = null;
-    this.serial = null;
+        var win = function (p) {
+            clearTimeout(timeoutTimer.timer);
+            if (!(timeoutTimer.timer)) {
+                // Timeout already happened, or native fired error callback for
+                // this geo request.
+                // Don't continue with success callback.
+                return;
+            }
+            successCallback(p);
+        };
+        var fail = function (e) {
+            clearTimeout(timeoutTimer.timer);
+            timeoutTimer.timer = null;
+            if (errorCallback) {
+                errorCallback(e);
+            }
+        };
 
-    var me = this;
-
-    channel.onCordovaReady.subscribe(function() {
-        me.getInfo(function(info) {
-            //ignoring info.cordova returning from native, we should use value from cordova.version defined in cordova.js
-            //TODO: CB-5105 native implementations should not return info.cordova
-            var buildLabel = cordova.version;
-            me.available = true;
-            me.platform = info.platform;
-            me.version = info.version;
-            me.uuid = info.uuid;
-            me.cordova = buildLabel;
-            me.model = info.model;
-            me.isVirtual = info.isVirtual;
-            me.manufacturer = info.manufacturer || 'unknown';
-            me.serial = info.serial || 'unknown';
-            channel.onCordovaInfoReady.fire();
-        },function(e) {
-            me.available = false;
-            utils.alert("[ERROR] Error initializing Cordova: " + e);
-        });
-    });
-}
-
-/**
- * Get device info
- *
- * @param {Function} successCallback The function to call when the heading data is available
- * @param {Function} errorCallback The function to call when there is an error getting the heading data. (OPTIONAL)
- */
-Device.prototype.getInfo = function(successCallback, errorCallback) {
-    argscheck.checkArgs('fF', 'Device.getInfo', arguments);
-    exec(successCallback, errorCallback, "Device", "getDeviceInfo", []);
+        if (options.timeout !== Infinity) {
+            // If the timeout value was not set to Infinity (default), then
+            // set up a timeout function that will fire the error callback
+            // if no successful position was retrieved before timeout expired.
+            timeoutTimer.timer = createTimeout(fail, options.timeout);
+        } else {
+            // This is here so the check in the win function doesn't mess stuff up
+            // may seem weird but this guarantees timeoutTimer is
+            // always truthy before we call into native
+            timeoutTimer.timer = true;
+        }
+        exec(win, fail, 'BaiduMapLocation', 'getCurrentPosition', options);
+        return timeoutTimer
+    }
 };
 
-module.exports = new Device();
+// Returns a timeout failure, closed over a specified timeout value and error callback.
+function createTimeout(errorCallback, timeout) {
+    var t = setTimeout(function () {
+        clearTimeout(t);
+        t = null;
+        errorCallback({
+            code: -1,
+            message: "Position retrieval timed out."
+        });
+    }, timeout);
+    return t;
+}
+
+module.exports = baidumap_location

@@ -19,70 +19,69 @@
 -->
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    xmlns:rim="http://www.blackberry.com/ns/widgets"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    id="cordova-plugin-device"
-    version="1.1.4">
-    <name>Device</name>
-    <description>Cordova Device Plugin</description>
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-baidumaplocation"
+        version="1.0.1">
+    <name>Badidu MapLocation</name>
+    <description>Cordova Geolocation Plugin,use Baidu Map SDK</description>
     <license>Apache 2.0</license>
-    <keywords>cordova,device</keywords>
-    <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git</repo>
-    <issue>https://issues.apache.org/jira/browse/CB/component/12320648</issue>
+    <keywords>cordova,baidu,location,geolocation</keywords>
+    <repo>https://github.com/aruis/cordova-plugin-baidumaplocation</repo>
+    <issue>https://github.com/aruis/cordova-plugin-baidumaplocation/issues</issue>
 
-    <js-module src="www/device.js" name="device">
-        <clobbers target="device" />
+    <js-module src="www/baidu_map_location.js" name="baidu_map_location">
+        <clobbers target="baidu_map_location"/>
     </js-module>
 
-    <!-- firefoxos -->
-    <platform name="firefoxos">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Device">
-                <param name="firefoxos-package" value="Device" />
-            </feature>
-        </config-file>
-
-        <js-module src="src/firefoxos/DeviceProxy.js" name="DeviceProxy">
-            <runs />
-        </js-module>
-    </platform>
-
-    <!-- tizen -->
-    <platform name="tizen">
-        <js-module src="src/tizen/DeviceProxy.js" name="DeviceProxy">
-            <runs />
-        </js-module>
-    </platform>
+    <preference name="AK"/>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="Device" >
-                <param name="android-package" value="org.apache.cordova.device.Device"/>
+            <feature name="BaiduMapLocation">
+                <param name="android-package" value="com.aruistar.cordova.baidumap"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/Device.java" target-dir="src/org/apache/cordova/device" />
-    </platform>
-
-    <!-- amazon-fireos -->
-    <platform name="amazon-fireos">
-        <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="Device" >
-                <param name="android-package" value="org.apache.cordova.device.Device"/>
-            </feature>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <!-- 这个权限用于进行网络定位-->
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+            <!-- 这个权限用于访问GPS定位-->
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+            <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+            <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+            <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+            <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+            <!-- 用于读取手机当前的状态-->
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+            <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+            <!-- 访问网络，网络定位需要上网-->
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <!-- SD卡读取权限，用户写入离线定位数据-->
+            <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
         </config-file>
 
-        <source-file src="src/android/Device.java" target-dir="src/org/apache/cordova/device" />
-    </platform>
-    
-    <!-- ubuntu -->
-    <platform name="ubuntu">
-        <header-file src="src/ubuntu/device.h" />
-        <source-file src="src/ubuntu/device.cpp" />
-        <js-module src="src/ubuntu/device.js" name="DeviceProxy">
-            <merges target="device" />
-        </js-module>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <!-- 在application标签中声明service组件,每个app拥有自己单独的定位service -->
+            <service
+                    android:name="com.baidu.location.f"
+                    android:enabled="true"
+                    android:process=":remote">
+                <intent-filter>
+                    <action android:name="com.baidu.location.service_v2.2">
+                    </action>
+                </intent-filter>
+            </service>
+            <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="$AK"/>
+        </config-file>
+
+        <source-file src="src/android/BMapLocation.java" target-dir="src/com/aruistar/cordova/baidumap"/>
+        <source-file src="libs/android/armeabi/liblocSDK6a.so" target-dir="libs/armeabi"/>
+        <source-file src="libs/android/armeabi/liblocSDK6a.so" target-dir="libs/armeabi-v7a"/>
+        <source-file src="libs/android/BaiduLBS_Android.jar" target-dir="libs"/>
     </platform>
 
     <!-- ios -->
@@ -93,82 +92,8 @@
             </feature>
         </config-file>
 
-        <header-file src="src/ios/CDVDevice.h" />
-        <source-file src="src/ios/CDVDevice.m" />
+        <header-file src="src/ios/CDVDevice.h"/>
+        <source-file src="src/ios/CDVDevice.m"/>
     </platform>
-
-    <!-- blackberry10 -->
-    <platform name="blackberry10">
-        <source-file src="src/blackberry10/index.js" target-dir="Device" />
-        <config-file target="www/config.xml" parent="/widget">
-            <feature name="Device" value="Device"/>
-        </config-file>
-        <config-file target="www/config.xml" parent="/widget/rim:permissions">
-            <rim:permit>read_device_identifying_information</rim:permit>
-        </config-file>
-    </platform>
-
-    <!-- wp7 -->
-    <platform name="wp7">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Device">
-                <param name="wp-package" value="Device"/>
-            </feature>
-        </config-file>
-
-        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-            <Capability Name="ID_CAP_IDENTITY_DEVICE" />
-        </config-file>
-
-        <source-file src="src/wp/Device.cs" />
-    </platform>
-
-    <!-- wp8 -->
-    <platform name="wp8">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Device">
-                <param name="wp-package" value="Device"/>
-            </feature>
-        </config-file>
-
-        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-            <Capability Name="ID_CAP_IDENTITY_DEVICE" />
-        </config-file>
-
-        <source-file src="src/wp/Device.cs" />
-    </platform>
-
-    <!-- windows -->
-    <platform name="windows">
-        <js-module src="src/windows/DeviceProxy.js" name="DeviceProxy">
-            <merges target="" />
-        </js-module>
-    </platform>
-
-    <!-- browser -->
-    <platform name="browser">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Device">
-                <param name="browser-package" value="Device" />
-            </feature>
-        </config-file>
-
-        <js-module src="src/browser/DeviceProxy.js" name="DeviceProxy">
-            <runs />
-        </js-module>
-    </platform>
-
-    <!-- osx -->
-    <platform name="osx">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Device">
-                <param name="ios-package" value="CDVDevice"/>
-            </feature>
-        </config-file>
-
-        <header-file src="src/osx/CDVDevice.h" />
-        <source-file src="src/osx/CDVDevice.m" />
-    </platform>
-
 
 </plugin>

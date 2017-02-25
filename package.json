@@ -1,52 +1,29 @@
 {
-  "name": "cordova-plugin-device",
-  "version": "1.1.4",
-  "description": "Cordova Device Plugin",
+  "name": "cordova-plugin-baidumaplocation",
+  "version": "1.0.1",
+  "description": "Cordova Geolocation Plugin,use Baidu Map SDK",
   "cordova": {
-    "id": "cordova-plugin-device",
+    "id": "cordova-plugin-baidumaplocation",
     "platforms": [
-      "firefoxos",
-      "tizen",
       "android",
-      "amazon-fireos",
-      "ubuntu",
       "ios",
-      "blackberry10",
-      "wp7",
-      "wp8",
-      "windows8",
-      "windows",
-      "browser",
-      "osx"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/apache/cordova-plugin-device"
+    "url": "https://github.com/aruis/cordova-plugin-baidumaplocation"
   },
   "keywords": [
     "cordova",
+    "baidu",
+    "location",
+    "geolocation",
     "device",
     "ecosystem:cordova",
-    "cordova-firefoxos",
-    "cordova-tizen",
     "cordova-android",
-    "cordova-amazon-fireos",
-    "cordova-ubuntu",
-    "cordova-ios",
-    "cordova-blackberry10",
-    "cordova-wp7",
-    "cordova-wp8",
-    "cordova-windows8",
-    "cordova-windows",
-    "cordova-browser",
-    "cordova-osx"
+    "cordova-ios"
   ],
-  "scripts": {
-    "test": "npm run jshint",
-    "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint tests"
-  },
-  "author": "Apache Software Foundation",
+  "author": "aruis",
   "license": "Apache-2.0",
   "engines": {
     "cordovaDependencies": {
@@ -54,8 +31,5 @@
         "cordova": ">100"
       }
     }
-  },
-  "devDependencies": {
-    "jshint": "^2.6.0"
   }
 }
