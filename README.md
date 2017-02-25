@@ -1,11 +1,12 @@
 #百度地图定位Cordova插件
-__Android版可用，IOS版开发中...__
+##Android版可用，IOS版开发中...
 
 
-##致谢: 本插件的开发主要参考 [cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location),感谢[liangzhenghui](https://github.com/liangzhenghui)
-##由于[cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location)明确表示没有IOS版，所以才有了重新开发一版兼容Android与IOS的想法。这样才能保证不同平台获取的坐标系是基于同一编码的，方便逻辑的统一性。
+__致谢: 本插件的开发主要参考 [cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location),感谢[liangzhenghui](https://github.com/liangzhenghui)__
 
-###Android 版原作者[mrwutong](https://github.com/mrwutong)的话
+__由于[cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location)明确表示没有IOS版，所以才有了重新开发一版兼容Android与IOS的想法。这样才能保证不同平台获取的坐标系是基于同一编码的，方便逻辑的统一性。__
+
+__Android 版原作者[mrwutong](https://github.com/mrwutong)的话__
 
 >>>####Android版为什么不使用官方的_cordova-plugin-geolocation_插件
 >>>最新版的插件已经删除掉的Android版定位的代码，改为基于系统浏览器(chrome内核)进行定位。
@@ -16,7 +17,7 @@ __Android版可用，IOS版开发中...__
 >>>
 >>>__此插件就这么诞生了__
 
-####版本
+####零，版本
 基于百度地图Android版定位SDK（v7.1）
 
 ####一，申请密钥
