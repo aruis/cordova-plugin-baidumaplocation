@@ -1,311 +1,103 @@
----
-title: Device
-description: Get device information.
----
-<!--
-# license: Licensed to the Apache Software Foundation (ASF) under one
-#         or more contributor license agreements.  See the NOTICE file
-#         distributed with this work for additional information
-#         regarding copyright ownership.  The ASF licenses this file
-#         to you under the Apache License, Version 2.0 (the
-#         "License"); you may not use this file except in compliance
-#         with the License.  You may obtain a copy of the License at
-#
-#           http://www.apache.org/licenses/LICENSE-2.0
-#
-#         Unless required by applicable law or agreed to in writing,
-#         software distributed under the License is distributed on an
-#         "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#         KIND, either express or implied.  See the License for the
-#         specific language governing permissions and limitations
-#         under the License.
--->
+#百度地图定位Cordova插件，Android版可用，IOS版开发中...
+##致谢: 本插件的开发主要参考 [cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location),感谢[liangzhenghui](https://github.com/liangzhenghui)
+##由于[cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location)明确表示没有IOS版，所以才有了重新开发一版兼容Android与IOS的想法。这样才能保证不同平台获取的坐标系是基于同一编码的，方便逻辑的统一性。
 
-|Android|iOS| Windows 8.1 Store | Windows 8.1 Phone | Windows 10 Store | Travis CI |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=android,PLUGIN=cordova-plugin-device)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=android,PLUGIN=cordova-plugin-device/)|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=ios,PLUGIN=cordova-plugin-device)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=ios,PLUGIN=cordova-plugin-device/)|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=windows-8.1-store,PLUGIN=cordova-plugin-device)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=windows-8.1-store,PLUGIN=cordova-plugin-device/)|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=windows-8.1-phone,PLUGIN=cordova-plugin-device)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=windows-8.1-phone,PLUGIN=cordova-plugin-device/)|[![Build Status](http://cordova-ci.cloudapp.net:8080/buildStatus/icon?job=cordova-periodic-build/PLATFORM=windows-10-store,PLUGIN=cordova-plugin-device)](http://cordova-ci.cloudapp.net:8080/job/cordova-periodic-build/PLATFORM=windows-10-store,PLUGIN=cordova-plugin-device/)|[![Build Status](https://travis-ci.org/apache/cordova-plugin-device.svg?branch=master)](https://travis-ci.org/apache/cordova-plugin-device)|
+###Android 版原作者[mrwutong](https://github.com/mrwutong)的话
 
-# cordova-plugin-device
+>>>####Android版为什么不使用官方的_cordova-plugin-geolocation_插件
+>>>最新版的插件已经删除掉的Android版定位的代码，改为基于系统浏览器(chrome内核)进行定位。
+>>>
+>>>为什么这样做，也有人问过同样的问题，作者的回答是这样比原生定位更快更准确。
+>>>
+>>>但经过测试后，发现根本无法定位，几经调查发现跟貌似国内网络有关系，原因相信大家都懂的，此过省略好几个字。。。。
+>>>
+>>>__此插件就这么诞生了__
 
-This plugin defines a global `device` object, which describes the device's hardware and software.
-Although the object is in the global scope, it is not available until after the `deviceready` event.
+####版本
+基于百度地图Android版定位SDK（v7.1）
 
-```js
-document.addEventListener("deviceready", onDeviceReady, false);
-function onDeviceReady() {
-    console.log(device.cordova);
+####一，申请密钥
+请参照：[申请密钥Android定位SDK](http://developer.baidu.com/map/index.php?title=android-locsdk/guide/key)
+
+>>每一个独立包名的App 对应一个AK，不可混用
+
+####二，安装插件````
+
+```
+ionic plugin add https://github.com/aruis/cordova-plugin-baidumaplocation --variable ANDROID_KEY="<API_KEY>"
+//此处的API_KEY来自于第一步，直接替换<API_KEY>，也可以最后跟 --save 参数，将插件信息保存到config.xml中
+```
+
+####三，使用方法
+
+```
+      // 进行定位
+      baidumap_location.getCurrentPosition(function (result) {
+        console.log("================")
+        console.log(JSON.stringify(result, null, 4));
+      }, function (error) {
+
+      });
+```
+
+获得定位信息，返回JSON格式数据:
+
+```
+{
+    "time": "2017-02-25 17:30:00",//获取时间
+    "locType": 161,//定位类型
+    "locTypeDescription": "NetWork location successful!",//定位类型解释
+    "latitude": 34.6666666,//纬度
+    "lontitude": 117.8888,//经度
+    "radius": 61.9999999,//半径
+    "userIndoorState": 1,//是否室内
+    "direction": -1//方向
+}
+```
+具体字段内容请参照：[BDLocation v7.1](http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.1/index.html)
+
+如果获取到的信息是：
+
+```
+{
+"locType": 505,
+"locTypeDescription": "NetWork location failed because baidu location service check the key is unlegal, please check the key in AndroidManifest.xml !",
+"latitude": 5e-324,
+"lontitude": 5e-324,
+"radius": 0,
+"userIndoorState": -1,
+"direction": -1
 }
 ```
 
-Report issues with this plugin on the [Apache Cordova issue tracker](https://issues.apache.org/jira/issues/?jql=project%20%3D%20CB%20AND%20status%20in%20%28Open%2C%20%22In%20Progress%22%2C%20Reopened%29%20AND%20resolution%20%3D%20Unresolved%20AND%20component%20%3D%20%22Plugin%20Device%22%20ORDER%20BY%20priority%20DESC%2C%20summary%20ASC%2C%20updatedDate%20DESC)
+说明Key有问题，可以检查下生成的AndroidManifest.xml文件里面是否有如下信息
 
-
-## Installation
-
-    cordova plugin add cordova-plugin-device
-
-## Properties
-
-- device.cordova
-- device.model
-- device.platform
-- device.uuid
-- device.version
-- device.manufacturer
-- device.isVirtual
-- device.serial
-
-## device.cordova
-
-Get the version of Cordova running on the device.
-
-### Supported Platforms
-
-- Amazon Fire OS
-- Android
-- BlackBerry 10
-- Browser
-- Firefox OS
-- iOS
-- Tizen
-- Windows Phone 7 and 8
-- Windows
-- OSX
-
-## device.model
-
-The `device.model` returns the name of the device's model or
-product. The value is set by the device manufacturer and may be
-different across versions of the same product.
-
-### Supported Platforms
-
-- Android
-- BlackBerry 10
-- Browser
-- iOS
-- Tizen
-- Windows Phone 7 and 8
-- Windows
-- OSX
-
-### Quick Example
-
-```js
-// Android:    Nexus One       returns "Passion" (Nexus One code name)
-//             Motorola Droid  returns "voles"
-// BlackBerry: Torch 9800      returns "9800"
-// Browser:    Google Chrome   returns "Chrome"
-//             Safari          returns "Safari"
-// iOS:     for the iPad Mini, returns iPad2,5; iPhone 5 is iPhone 5,1. See http://theiphonewiki.com/wiki/index.php?title=Models
-// OSX:                        returns "x86_64"
-//
-var model = device.model;
+```
+  <service android:enabled="true" android:name="com.baidu.location.f" android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" />
+            </intent-filter>
+        </service>
+  <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="Ybl59x5hTw5IOlSjUnUuBsihrb4C1eQQ" />
 ```
 
-### Android Quirks
+如果没有，说明插件使用不当，尝试重新安装，如果有这些信息，说明Key与当前程序的包名不一致，请检查Key的申请信息是否正确
 
-- Gets the [product name](http://developer.android.com/reference/android/os/Build.html#PRODUCT) instead of the [model name](http://developer.android.com/reference/android/os/Build.html#MODEL), which is often the production code name. For example, the Nexus One returns `Passion`, and Motorola Droid returns `voles`.
+####四，查看当前安装了哪些插件
 
-### Tizen Quirks
-
-- Returns the device model assigned by the vendor, for example, `TIZEN`
-
-### Windows Phone 7 and 8 Quirks
-
-- Returns the device model specified by the manufacturer. For example, the Samsung Focus returns `SGH-i917`.
-
-## device.platform
-
-Get the device's operating system name.
-
-```js
-var string = device.platform;
 ```
-### Supported Platforms
-
-- Android
-- BlackBerry 10
-- Browser
-- Firefox OS
-- iOS
-- Tizen
-- Windows Phone 7 and 8
-- Windows
-- OSX
-
-### Quick Example
-
-```js
-// Depending on the device, a few examples are:
-//   - "Android"
-//   - "BlackBerry 10"
-//   - "browser"
-//   - "iOS"
-//   - "WinCE"
-//   - "Tizen"
-//   - "Mac OS X"
-var devicePlatform = device.platform;
+ionic plugin ls
 ```
 
-### Windows Phone 7 Quirks
+####五，删除本插件
 
-Windows Phone 7 devices report the platform as `WinCE`.
-
-### Windows Phone 8 Quirks
-
-Windows Phone 8 devices report the platform as `Win32NT`.
-
-## device.uuid
-
-Get the device's Universally Unique Identifier ([UUID](http://en.wikipedia.org/wiki/Universally_Unique_Identifier)).
-
-```js
-var string = device.uuid;
+```
+ionic plugin rm cordova-plugin-baidumaplocation
 ```
 
-### Description
 
-The details of how a UUID is generated are determined by the device manufacturer and are specific to the device's platform or model.
 
-### Supported Platforms
 
-- Android
-- BlackBerry 10
-- iOS
-- Tizen
-- Windows Phone 7 and 8
-- Windows
-- OSX
 
-### Quick Example
 
-```js
-// Android: Returns a random 64-bit integer (as a string, again!)
-//          The integer is generated on the device's first boot
-//
-// BlackBerry: Returns the PIN number of the device
-//             This is a nine-digit unique integer (as a string, though!)
-//
-// iPhone: (Paraphrased from the UIDevice Class documentation)
-//         Returns the [UIDevice identifierForVendor] UUID which is unique and the same for all apps installed by the same vendor. However the UUID can be different if the user deletes all apps from the vendor and then reinstalls it.
-// Windows Phone 7 : Returns a hash of device+current user,
-// if the user is not defined, a guid is generated and will persist until the app is uninstalled
-// Tizen: returns the device IMEI (International Mobile Equipment Identity or IMEI is a number
-// unique to every GSM and UMTS mobile phone.
-var deviceID = device.uuid;
-```
-
-### iOS Quirk
-
-The `uuid` on iOS uses the identifierForVendor property. It is unique to the device across the same vendor, but will be different for different vendors and will change if all apps from the vendor are deleted and then reinstalled.
-Refer [here](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/#//apple_ref/occ/instp/UIDevice/identifierForVendor) for details.
-The UUID will be the same if app is restored from a backup or iCloud as it is saved in preferences. Users using older versions of this plugin will still receive the same previous UUID generated by another means as it will be retrieved from preferences.
-
-### OSX Quirk
-
-The `uuid` on OSX is generated automatically if it does not exist yet and is stored in the `standardUserDefaults` in the `CDVUUID` property.
-
-### Windows Phone 7 and 8 Quirks
-
-The `uuid` for Windows Phone 7 requires the permission
-`ID_CAP_IDENTITY_DEVICE`.  Microsoft will likely deprecate this
-property soon.  If the capability is not available, the application
-generates a persistent guid that is maintained for the duration of the
-application's installation on the device.
-
-## device.version
-
-Get the operating system version.
-
-    var string = device.version;
-
-### Supported Platforms
-
-- Android 2.1+
-- BlackBerry 10
-- Browser
-- iOS
-- Tizen
-- Windows Phone 7 and 8
-- Windows
-- OSX
-
-### Quick Example
-
-```js
-// Android:    Froyo OS would return "2.2"
-//             Eclair OS would return "2.1", "2.0.1", or "2.0"
-//             Version can also return update level "2.1-update1"
-//
-// BlackBerry: Torch 9800 using OS 6.0 would return "6.0.0.600"
-//
-// Browser:    Returns version number for the browser
-//
-// iPhone:     iOS 3.2 returns "3.2"
-//
-// Windows Phone 7: returns current OS version number, ex. on Mango returns 7.10.7720
-// Windows 8: return the current OS version, ex on Windows 8.1 returns 6.3.9600.16384
-// Tizen: returns "TIZEN_20120425_2"
-// OSX:        El Capitan would return "10.11.2"
-//
-var deviceVersion = device.version;
-```
-
-## device.manufacturer
-
-Get the device's manufacturer.
-
-    var string = device.manufacturer;
-
-### Supported Platforms
-
-- Android
-- BlackBerry 10
-- iOS
-- Windows Phone 7 and 8
-- Windows
-
-### Quick Example
-
-```js
-// Android:    Motorola XT1032 would return "motorola"
-// BlackBerry: returns "BlackBerry"
-// iPhone:     returns "Apple"
-//
-var deviceManufacturer = device.manufacturer;
-```
-
-## device.isVirtual
-
-whether the device is running on a simulator.
-
-```js
-var isSim = device.isVirtual;
-```
-
-### Supported Platforms
-
-- Android 2.1+
-- iOS
-- Windows Phone 8
-- Windows
-- OSX
-
-### OSX Quirk
-
-The `isVirtual` property on OS X always returns false.
-
-## device.serial
-
-Get the device hardware serial number ([SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL)).
-
-```js
-var string = device.serial;
-```
-
-### Supported Platforms
-
-- Android
-- OSX
 

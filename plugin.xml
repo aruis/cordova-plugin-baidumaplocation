@@ -33,7 +33,7 @@
         <clobbers target="baidumap_location"/>
     </js-module>
 
-    <preference name="AK"/>
+    <preference name="ANDROID_KEY"/>
 
     <!-- android -->
     <platform name="android">
@@ -75,7 +75,7 @@
                     </action>
                 </intent-filter>
             </service>
-            <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="$AK"/>
+            <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="$ANDROID_KEY"/>
         </config-file>
 
         <source-file src="src/android/BaiduMapLocation.java" target-dir="src/com/aruistar/cordova/baidumap"/>
