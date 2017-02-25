@@ -1,4 +1,7 @@
-#百度地图定位Cordova插件，Android版可用，IOS版开发中...
+#百度地图定位Cordova插件
+__Android版可用，IOS版开发中...__
+
+
 ##致谢: 本插件的开发主要参考 [cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location),感谢[liangzhenghui](https://github.com/liangzhenghui)
 ##由于[cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location)明确表示没有IOS版，所以才有了重新开发一版兼容Android与IOS的想法。这样才能保证不同平台获取的坐标系是基于同一编码的，方便逻辑的统一性。
 
