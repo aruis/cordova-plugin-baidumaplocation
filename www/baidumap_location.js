@@ -25,7 +25,7 @@ var baidumap_location = {
             }
         };
 
-        if (options.timeout !== Infinity) {
+        if (options && options.timeout !== Infinity) {
             // If the timeout value was not set to Infinity (default), then
             // set up a timeout function that will fire the error callback
             // if no successful position was retrieved before timeout expired.
