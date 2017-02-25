@@ -67,14 +67,15 @@ public class BaiduMapLocation extends CordovaPlugin {
                 json.put("direction", location.getDirection());
                 json.put("locationDescribe", location.getLocationDescribe());
 
+                PluginResult pluginResult
                 if (location.getLocType() == BDLocation.TypeServerError
                         || location.getLocType() == BDLocation.TypeNetWorkException
                         || location.getLocType() == BDLocation.TypeCriteriaException) {
 
                     json.put("describe", "定位失败，请通过locTypeDescription判断");
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, json);
+                    pluginResult = new PluginResult(PluginResult.Status.ERROR, json);
                 } else {
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, json);
+                    pluginResult = new PluginResult(PluginResult.Status.OK, json);
                 }
 
 
