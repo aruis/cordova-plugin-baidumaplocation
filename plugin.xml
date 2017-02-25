@@ -29,8 +29,8 @@
     <repo>https://github.com/aruis/cordova-plugin-baidumaplocation</repo>
     <issue>https://github.com/aruis/cordova-plugin-baidumaplocation/issues</issue>
 
-    <js-module src="www/baidu_map_location.js" name="baidu_map_location">
-        <clobbers target="baidu_map_location"/>
+    <js-module src="www/baidumap_location.js" name="baidumap_location">
+        <clobbers target="baidumap_location"/>
     </js-module>
 
     <preference name="AK"/>
@@ -79,8 +79,8 @@
         </config-file>
 
         <source-file src="src/android/BaiduMapLocation.java" target-dir="src/com/aruistar/cordova/baidumap"/>
-        <source-file src="libs/android/armeabi/liblocSDK6a.so" target-dir="libs/armeabi"/>
-        <source-file src="libs/android/armeabi/liblocSDK6a.so" target-dir="libs/armeabi-v7a"/>
+        <source-file src="libs/android/armeabi/liblocSDK7a.so" target-dir="libs/armeabi"/>
+        <source-file src="libs/android/armeabi-v7a/liblocSDK7a.so" target-dir="libs/armeabi-v7a"/>
         <source-file src="libs/android/BaiduLBS_Android.jar" target-dir="libs"/>
     </platform>
 
