@@ -5,8 +5,7 @@
   "cordova": {
     "id": "cordova-plugin-baidumaplocation",
     "platforms": [
-      "android",
-      "ios",
+      "android"
     ]
   },
   "repository": {
@@ -20,8 +19,7 @@
     "geolocation",
     "device",
     "ecosystem:cordova",
-    "cordova-android",
-    "cordova-ios"
+    "cordova-android"
   ],
   "author": "aruis",
   "license": "Apache-2.0",
