@@ -34,6 +34,7 @@
     </js-module>
 
     <preference name="ANDROID_KEY"/>
+    <preference name="IOS_KEY"/>
 
     <!-- android -->
     <platform name="android">
@@ -84,16 +85,53 @@
         <source-file src="libs/android/BaiduLBS_Android.jar" target-dir="libs"/>
     </platform>
 
-    <!-- ios -->
-    <!--<platform name="ios">-->
-    <!--<config-file target="config.xml" parent="/*">-->
-    <!--<feature name="Device">-->
-    <!--<param name="ios-package" value="CDVDevice"/>-->
-    <!--</feature>-->
-    <!--</config-file>-->
+    <!--ios-->
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="BaiduMapLocation">
+                <param name="ios-package" value="BaiduMapLocation"/>
+            </feature>
+        </config-file>
 
-    <!--<header-file src="src/ios/CDVDevice.h"/>-->
-    <!--<source-file src="src/ios/CDVDevice.m"/>-->
-    <!--</platform>-->
+        <!--为了能够在iOS9中正常使用非HTTPS协议-->
+        <config-file parent="NSAppTransportSecurity" target="*-Info.plist">
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+            </dict>
+        </config-file>
+
+        <!--定位模式 TODO 设置为前后台永远定位-->
+        <!--NSLocationAlwaysUsageDescription / NSLocationWhenInUseUsageDescription-->
+        <config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist">
+            <string>$IOS_LOCATION_DESC</string>
+        </config-file>
+
+        <!--API_KEY-->
+        <config-file parent="BaiduMapLocation" target="*-Info.plist">
+            <dict>
+                <key>IOS_KEY</key>
+                <string>$IOS_KEY</string>
+            </dict>
+        </config-file>
+
+        <!--源文件-->
+        <header-file src="src/ios/BaiduMapLocation.h"/>
+        <source-file src="src/ios/BaiduMapLocation.mm"/>
+
+        <!--库文件-->
+        <framework src="src/ios/BaiduMapAPI_Base.framework" custom="true"/>
+        <framework src="src/ios/BaiduMapAPI_Location.framework" custom="true" />
+
+        <framework src="CoreLocation.framework"/>
+        <framework src="QuartzCore.framework"/>
+        <framework src="OpenGLES.framework"/>
+        <framework src="SystemConfiguration.framework"/>
+        <framework src="CoreGraphics.framework"/>
+        <framework src="Security.framework"/>
+        <framework src="libsqlite3.0.tbd"/>
+        <framework src="CoreTelephony.framework"/>
+        <framework src="libstdc++.6.0.9.tbd"/>
+    </platform>
 
 </plugin>
