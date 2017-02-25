@@ -23,26 +23,26 @@
 
 ####二，安装插件````
 
-```
+```shell
 ionic plugin add https://github.com/aruis/cordova-plugin-baidumaplocation --variable ANDROID_KEY="<API_KEY>"
 //此处的API_KEY来自于第一步，直接替换<API_KEY>，也可以最后跟 --save 参数，将插件信息保存到config.xml中
 ```
 
 ####三，使用方法
 
-```
-      // 进行定位
-      baidumap_location.getCurrentPosition(function (result) {
-        console.log("================")
-        console.log(JSON.stringify(result, null, 4));
-      }, function (error) {
+```javascript
+// 进行定位
+baidumap_location.getCurrentPosition(function (result) {
+    console.log("================")
+    console.log(JSON.stringify(result, null, 4));
+}, function (error) {
 
-      });
+});
 ```
 
 获得定位信息，返回JSON格式数据:
 
-```
+```javascript
 {
     "time": "2017-02-25 17:30:00",//获取时间
     "locType": 161,//定位类型
@@ -58,21 +58,21 @@ ionic plugin add https://github.com/aruis/cordova-plugin-baidumaplocation --vari
 
 如果获取到的信息是：
 
-```
+```javascript
 {
-"locType": 505,
-"locTypeDescription": "NetWork location failed because baidu location service check the key is unlegal, please check the key in AndroidManifest.xml !",
-"latitude": 5e-324,
-"lontitude": 5e-324,
-"radius": 0,
-"userIndoorState": -1,
-"direction": -1
+    "locType": 505,
+    "locTypeDescription": "NetWork location failed because baidu location service check the key is unlegal, please check the key in AndroidManifest.xml !",
+    "latitude": 5e-324,
+    "lontitude": 5e-324,
+    "radius": 0,
+    "userIndoorState": -1,
+    "direction": -1
 }
 ```
 
 说明Key有问题，可以检查下生成的AndroidManifest.xml文件里面是否有如下信息
 
-```
+```xml
   <service android:enabled="true" android:name="com.baidu.location.f" android:process=":remote">
             <intent-filter>
                 <action android:name="com.baidu.location.service_v2.2" />
@@ -85,13 +85,13 @@ ionic plugin add https://github.com/aruis/cordova-plugin-baidumaplocation --vari
 
 ####四，查看当前安装了哪些插件
 
-```
+```shell
 ionic plugin ls
 ```
 
 ####五，删除本插件
 
-```
+```shell
 ionic plugin rm cordova-plugin-baidumaplocation
 ```
 
