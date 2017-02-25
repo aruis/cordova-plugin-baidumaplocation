@@ -66,8 +66,15 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <!-- 在application标签中声明service组件,每个app拥有自己单独的定位service -->
-
-            <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote" />
+            <service
+                    android:name="com.baidu.location.f"
+                    android:enabled="true"
+                    android:process=":remote">
+                <intent-filter>
+                    <action android:name="com.baidu.location.service_v2.2">
+                    </action>
+                </intent-filter>
+            </service>
             <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="$AK"/>
         </config-file>
 
@@ -79,14 +86,14 @@
 
     <!-- ios -->
     <!--<platform name="ios">-->
-        <!--<config-file target="config.xml" parent="/*">-->
-            <!--<feature name="Device">-->
-                <!--<param name="ios-package" value="CDVDevice"/>-->
-            <!--</feature>-->
-        <!--</config-file>-->
+    <!--<config-file target="config.xml" parent="/*">-->
+    <!--<feature name="Device">-->
+    <!--<param name="ios-package" value="CDVDevice"/>-->
+    <!--</feature>-->
+    <!--</config-file>-->
 
-        <!--<header-file src="src/ios/CDVDevice.h"/>-->
-        <!--<source-file src="src/ios/CDVDevice.m"/>-->
+    <!--<header-file src="src/ios/CDVDevice.h"/>-->
+    <!--<source-file src="src/ios/CDVDevice.m"/>-->
     <!--</platform>-->
 
 </plugin>
