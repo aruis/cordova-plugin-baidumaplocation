@@ -36,7 +36,6 @@ ionic plugin add https://github.com/aruis/cordova-plugin-baidumaplocation --vari
 ```javascript
 // 进行定位
 baidumap_location.getCurrentPosition(function (result) {
-    console.log("================")
     console.log(JSON.stringify(result, null, 4));
 }, function (error) {
 
