@@ -1,5 +1,5 @@
 //
-//  BaiduMapLocation.m
+//  BaiduMapLocation.mm
 //
 //  Created by LiuRui on 2017/2/25.
 //
@@ -22,23 +22,6 @@
 - (void)getCurrentPosition:(CDVInvokedUrlCommand*)command
 {
     _execCommand = command;
-
-    NSArray* args = [command arguments];
-    NSString* mode = args[0];
-    double distanceFilter = [args[6] doubleValue];
-
-    if([mode isEqualToString:@"Battery_Saving"]){
-        _locService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    }
-    else if([mode isEqualToString:@"Battery_Saving"]){
-        _locService.desiredAccuracy = kCLLocationAccuracyBest;
-    }
-    else{
-        _locService.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-    }
-
-    _locService.distanceFilter = distanceFilter;
-
     [_locService startUserLocationService];
 }
 
@@ -51,6 +34,9 @@
         NSNumber* longitude = [NSNumber numberWithDouble:userLocation.location.coordinate.longitude];
         NSNumber* altitude = [NSNumber numberWithDouble:userLocation.location.altitude];
         NSNumber* radius = [NSNumber numberWithDouble:userLocation.location.horizontalAccuracy];
+        NSString* title = userLocation.title;
+        NSString* subtitle = userLocation.subtitle;
+
 
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -59,18 +45,18 @@
         [data setValue:[dateFormatter stringFromDate:time] forKey:@"time"];
         [data setValue:latitude forKey:@"latitude"];
         [data setValue:longitude forKey:@"longitude"];
-        [data setValue:altitude forKey:@"altitude"];
+        //[data setValue:altitude forKey:@"altitude"];
         [data setValue:radius forKey:@"radius"];
+        [data setValue:title forKey:@"title"];
+        [data setValue:subtitle forKey:@"subtitle"];
 
-        NSMutableDictionary* json = [[NSMutableDictionary alloc] init];
-        [json setValue:[NSNumber numberWithInt:0] forKey:@"code"];
-        [json setValue:@"success" forKey:@"msg"];
-        [json setValue:data forKey:@"data"];
 
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:json];
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:data];
         [result setKeepCallbackAsBool:TRUE];
         [_locService stopUserLocationService];
         [self.commandDelegate sendPluginResult:result callbackId:_execCommand.callbackId];
         _execCommand = nil;
     }
 }
+
+@end

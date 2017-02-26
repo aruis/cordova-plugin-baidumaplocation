@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-baidumaplocation"
-        version="1.1.1">
+        version="2.0.1">
     <name>BadiduMap Location</name>
     <description>Cordova Geolocation Plugin,use Baidu Map SDK</description>
     <license>Apache 2.0</license>
@@ -33,8 +33,8 @@
         <clobbers target="baidumap_location"/>
     </js-module>
 
-    <preference name="ANDROID_KEY"/>
-    <preference name="IOS_KEY"/>
+    <preference name="ANDROID_KEY" default=""/>
+    <preference name="IOS_KEY" default=""/>
     <preference name="IOS_LOCATION_DESC" default="请点击'好'以允许访问。"/>
 
     <!-- android -->
@@ -121,18 +121,15 @@
         <source-file src="src/ios/BaiduMapLocation.mm"/>
 
         <!--库文件-->
-        <framework src="src/ios/BaiduMapAPI_Base.framework" custom="true"/>
-        <framework src="src/ios/BaiduMapAPI_Location.framework" custom="true" />
+        <framework src="libs/ios/BaiduMapAPI_Base.framework" custom="true"/>
+        <framework src="libs/ios/BaiduMapAPI_Location.framework" custom="true"/>
+        <framework src="libs/ios/thirdlibs/libcrypto.a" custom="true"/>
+        <framework src="libs/ios/thirdlibs/libssl.a" custom="true"/>
 
         <framework src="CoreLocation.framework"/>
-        <framework src="QuartzCore.framework"/>
-        <framework src="OpenGLES.framework"/>
         <framework src="SystemConfiguration.framework"/>
-        <framework src="CoreGraphics.framework"/>
-        <framework src="Security.framework"/>
         <framework src="libsqlite3.0.tbd"/>
         <framework src="CoreTelephony.framework"/>
-        <framework src="libstdc++.6.0.9.tbd"/>
     </platform>
 
 </plugin>

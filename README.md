@@ -1,8 +1,8 @@
-#百度地图定位Cordova插件
-##Android版可用，IOS版开发中...
+#百度地图定位Cordova插件，支持Android，IOS
 
 
-__致谢: 本插件的开发主要参考 [cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location),感谢[liangzhenghui](https://github.com/liangzhenghui)__
+__致谢: 本插件Android开发主要参考 [cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location),感谢[liangzhenghui](https://github.com/liangzhenghui)；IOS开发主要参考[cordova-plugin-bdlocation](https://github.com/wilhantian/cordova-plugin-bdlocation)，感谢[wilhantian](https://github.com/wilhantian)__
+
 
 __由于[cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location)明确表示没有IOS版，所以才有了重新开发一版兼容Android与IOS的想法。这样才能保证不同平台获取的坐标系是基于同一编码的，方便逻辑的统一性。__
 
@@ -18,18 +18,23 @@ __Android 版原作者[mrwutong](https://github.com/mrwutong)的话__
 >>>__此插件就这么诞生了__
 
 ####零，版本
-基于百度地图Android版定位SDK（v7.1）
+基于百度地图Android版定位SDK（v7.1）以及百度地图IOS SDK （v3.2.1）
 
-####一，申请密钥
-请参照：[申请密钥Android定位SDK](http://developer.baidu.com/map/index.php?title=android-locsdk/guide/key)
+####一，申请Android及IOS版密钥
+[申请密钥Android定位SDK](http://developer.baidu.com/map/index.php?title=android-locsdk/guide/key)
 
->>每一个独立包名的App 对应一个AK，不可混用
+>>每一个AndroidManifest.xml 中的package属性 对应一个AK，不可混用
+
+[iOS SDK开发密钥](http://lbsyun.baidu.com/index.php?title=iossdk/guide/key)
+
+>>每一个Bundle Identifier 对应一个AK，不可混用
   
 ####二，安装插件````
 
 ```shell
-cordova plugin add cordova-plugin-baidumaplocation --variable ANDROID_KEY="<API_KEY>"
-//此处的API_KEY来自于第一步，直接替换<API_KEY>，也可以最后跟 --save 参数，将插件信息保存到config.xml中
+cordova plugin add cordova-plugin-baidumaplocation --variable ANDROID_KEY="<API_KEY_ANDROID>" --variable IOS_KEY="<API_KEY_IOS>"
+//此处的API_KEY_XX来自于第一步，直接替换<API_KEY_XX>，也可以最后跟 --save 参数，将插件信息保存到config.xml中
+//如果只需要Android端或者IOS端，可以只填写一个相应的AK，但是都不填肯定不行
 ```
 
 ####三，使用方法
@@ -48,18 +53,28 @@ baidumap_location.getCurrentPosition(function (result) {
 ```javascript
 {
     "time": "2017-02-25 17:30:00",//获取时间
-    "locType": 161,//定位类型
-    "locTypeDescription": "NetWork location successful!",//定位类型解释
     "latitude": 34.6666666,//纬度
     "lontitude": 117.8888,//经度
     "radius": 61.9999999,//半径
-    "userIndoorState": 1,//是否室内
-    "direction": -1//方向
+ 
+    //--------Android 独享 begin
+    "locType": 161,//定位类型                                            
+    "locTypeDescription": "NetWork location successful!",//定位类型解释   
+    "userIndoorState": 1,//是否室内                                     
+    //--------Android 独享 end
+    
+    //--------IOS 独享 begin
+    "title": "我的位置",//定位标注点标题信息
+    "subtitle": "我的位置",//定位标注点子标题信息
+    //--------IOS 独享 end
 }
 ```
-具体字段内容请参照：[BDLocation v7.1](http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.1/index.html)
+具体字段内容请参照：
+>>[Android版 BDLocation v7.1](http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.1/index.html)
 
-如果获取到的信息是：
+>>[IOS版 BMKUserLocation](http://wiki.lbsyun.baidu.com/cms/iossdk/doc/v3_2_0/html/interface_b_m_k_user_location.html#aba4b76e55f4605c5554fe16aca1b4fbf) 
+
+如果Android版获取到的信息是：
 
 ```javascript
 {
@@ -81,10 +96,10 @@ baidumap_location.getCurrentPosition(function (result) {
                 <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
         </service>
-  <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="Ybl59x5hTw5IOlSjUnUuBsihrb4C1eQQ" />
+  <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="abcdefghijklmn" />
 ```
 
-如果没有，说明插件使用不当，尝试重新安装，如果有这些信息，说明Key与当前程序的包名不一致，请检查Key的申请信息是否正确
+如果没有，说明插件使用不当，尝试重新安装，如果有这些信息，说明Key与当前程序AndroidManifest.xml 中的package名不一致，请检查Key的申请信息是否正确
 
 ####四，查看当前安装了哪些插件
 
