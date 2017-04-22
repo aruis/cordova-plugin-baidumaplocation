@@ -1,11 +1,16 @@
 package com.aruistar.cordova.baidumap;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.LOG;
@@ -14,10 +19,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * 百度定位cordova插件android端
  *
  * @author aruis
+ * @author KevinWang15
  */
 public class BaiduMapLocation extends CordovaPlugin {
 
@@ -72,21 +80,19 @@ public class BaiduMapLocation extends CordovaPlugin {
                         || location.getLocType() == BDLocation.TypeNetWorkException
                         || location.getLocType() == BDLocation.TypeCriteriaException) {
 
-                    json.put("describe", "定位失败，请通过locTypeDescription判断");
+                    json.put("describe", "定位失败");
                     pluginResult = new PluginResult(PluginResult.Status.ERROR, json);
                 } else {
                     pluginResult = new PluginResult(PluginResult.Status.OK, json);
                 }
 
 
-                pluginResult.setKeepCallback(true);
                 cbCtx.sendPluginResult(pluginResult);
             } catch (JSONException e) {
                 String errMsg = e.getMessage();
                 LOG.e(LOG_TAG, errMsg, e);
 
                 PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errMsg);
-                pluginResult.setKeepCallback(true);
                 cbCtx.sendPluginResult(pluginResult);
             } finally {
                 mLocationClient.stop();
@@ -100,32 +106,80 @@ public class BaiduMapLocation extends CordovaPlugin {
     };
 
     /**
+     * 安卓6以上动态权限相关
+     */
+
+    private static final int REQUEST_CODE = 100001;
+
+    private boolean needsToAlertForRuntimePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return !cordova.hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION) || !cordova.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+        } else {
+            return false;
+        }
+    }
+
+    private void requestPermission() {
+        ArrayList<String> permissionsToRequire = new ArrayList<String>();
+
+        if (!cordova.hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION))
+            permissionsToRequire.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (!cordova.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION))
+            permissionsToRequire.add(Manifest.permission.ACCESS_FINE_LOCATION);
+
+        String[] _permissionsToRequire = new String[permissionsToRequire.size()];
+        _permissionsToRequire = permissionsToRequire.toArray(_permissionsToRequire);
+        cordova.requestPermissions(this, REQUEST_CODE, _permissionsToRequire);
+    }
+
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
+        if (cbCtx == null || requestCode != REQUEST_CODE)
+            return;
+        for (int r : grantResults) {
+            if (r == PackageManager.PERMISSION_DENIED) {
+                JSONObject json = new JSONObject();
+                json.put("describe", "定位失败");
+                LOG.e(LOG_TAG, "权限请求被拒绝");
+                cbCtx.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, json));
+                return;
+            }
+        }
+
+        performGetLocation();
+    }
+
+    /**
      * 插件主入口
      */
     @Override
     public boolean execute(String action, final JSONArray args, CallbackContext callbackContext) throws JSONException {
-
-        boolean ret = false;
-
+        cbCtx = callbackContext;
         if ("getCurrentPosition".equalsIgnoreCase(action)) {
-            cbCtx = callbackContext;
-
-            PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
-            pluginResult.setKeepCallback(true);
-            cbCtx.sendPluginResult(pluginResult);
-
-            if (mLocationClient == null) {
-                mLocationClient = new LocationClient(this.webView.getContext());
-                mLocationClient.registerLocationListener(myListener);
-
-                mLocationClient.setLocOption(getDefaultLocationClientOption());
+            if (!needsToAlertForRuntimePermission()) {
+                performGetLocation();
+            } else {
+                requestPermission();
+                // 会在onRequestPermissionResult时performGetLocation
             }
-
-            mLocationClient.start();
-            ret = true;
+            return true;
         }
 
-        return ret;
+        return false;
+    }
+
+
+    /**
+     * 权限获得完毕后进行定位
+     */
+    private void performGetLocation() {
+        if (mLocationClient == null) {
+            mLocationClient = new LocationClient(this.webView.getContext());
+            mLocationClient.registerLocationListener(myListener);
+            mLocationClient.setLocOption(getDefaultLocationClientOption());
+        }
+
+        mLocationClient.start();
     }
 
 
