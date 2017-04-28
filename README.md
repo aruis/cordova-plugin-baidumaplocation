@@ -1,7 +1,7 @@
-#百度地图定位Cordova插件，支持Android，IOS
+# 百度地图定位Cordova插件，支持Android，IOS
 
 
-###可以在此地址查看[example](https://github.com/aruis/testbmap-cordova-ionic)
+### 可以在此地址查看[example](https://github.com/aruis/testbmap-cordova-ionic)
 
 __致谢: 本插件Android开发主要参考 [cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location),感谢[liangzhenghui](https://github.com/liangzhenghui)；IOS开发主要参考[cordova-plugin-bdlocation](https://github.com/wilhantian/cordova-plugin-bdlocation)，感谢[wilhantian](https://github.com/wilhantian)__
 
@@ -10,36 +10,36 @@ __由于[cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qd
 
 __Android 版原作者[mrwutong](https://github.com/mrwutong)的话__
 
->>>####Android版为什么不使用官方的_cordova-plugin-geolocation_插件
->>>最新版的插件已经删除掉的Android版定位的代码，改为基于系统浏览器(chrome内核)进行定位。
->>>
->>>为什么这样做，也有人问过同样的问题，作者的回答是这样比原生定位更快更准确。
->>>
->>>但经过测试后，发现根本无法定位，几经调查发现跟貌似国内网络有关系，原因相信大家都懂的，此过省略好几个字。。。。
->>>
->>>__此插件就这么诞生了__
+>#### Android版为什么不使用官方的_cordova-plugin-geolocation_插件
+>最新版的插件已经删除掉的Android版定位的代码，改为基于系统浏览器(chrome内核)进行定位。
+>
+>为什么这样做，也有人问过同样的问题，作者的回答是这样比原生定位更快更准确。
+>
+>但经过测试后，发现根本无法定位，几经调查发现跟貌似国内网络有关系，原因相信大家都懂的，此过省略好几个字。。。。
+>
+>__此插件就这么诞生了__
 
-####零，版本
+#### 零，版本
 基于百度地图Android版定位SDK（v7.1）以及百度地图IOS SDK （v3.2.1）
 
-####一，申请Android及IOS版密钥
+#### 一，申请Android及IOS版密钥
 [申请密钥Android定位SDK](http://developer.baidu.com/map/index.php?title=android-locsdk/guide/key)
 
->>每一个AndroidManifest.xml 中的package属性 对应一个AK，不可混用
+>每一个AndroidManifest.xml 中的package属性 对应一个AK，不可混用
 
 [iOS SDK开发密钥](http://lbsyun.baidu.com/index.php?title=iossdk/guide/key)
 
->>每一个Bundle Identifier 对应一个AK，不可混用
+>每一个Bundle Identifier 对应一个AK，不可混用
   
-####二，安装插件````
+#### 二，安装插件
 
 ```shell
 cordova plugin add cordova-plugin-baidumaplocation --variable ANDROID_KEY="<API_KEY_ANDROID>" --variable IOS_KEY="<API_KEY_IOS>"
-//此处的API_KEY_XX来自于第一步，直接替换<API_KEY_XX>，也可以最后跟 --save 参数，将插件信息保存到config.xml中
-//如果只需要Android端或者IOS端，可以只填写一个相应的AK，但是都不填肯定不行
+# 此处的API_KEY_XX来自于第一步，直接替换<API_KEY_XX>，也可以最后跟 --save 参数，将插件信息保存到config.xml中
+# 如果只需要Android端或者IOS端，可以只填写一个相应的AK，但是都不填肯定不行
 ```
 
-####三，使用方法
+#### 三，使用方法
 
 ```javascript
 // 进行定位
@@ -72,13 +72,13 @@ baidumap_location.getCurrentPosition(function (result) {
 }
 ```
 具体字段内容请参照：
->>[Android版 BDLocation v7.1](http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.1/index.html)
+>[Android版 BDLocation v7.1](http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.1/index.html)
 
->>[IOS版 BMKUserLocation](http://wiki.lbsyun.baidu.com/cms/iossdk/doc/v3_2_0/html/interface_b_m_k_user_location.html#aba4b76e55f4605c5554fe16aca1b4fbf) 
+>[IOS版 BMKUserLocation](http://wiki.lbsyun.baidu.com/cms/iossdk/doc/v3_2_0/html/interface_b_m_k_user_location.html#aba4b76e55f4605c5554fe16aca1b4fbf) 
 
 如果Android版获取到的信息是：
 
-```javascript
+```json
 {
     "locType": 505,
     "locTypeDescription": "NetWork location failed because baidu location service check the key is unlegal, please check the key in AndroidManifest.xml !",
@@ -93,31 +93,24 @@ baidumap_location.getCurrentPosition(function (result) {
 说明Key有问题，可以检查下生成的AndroidManifest.xml文件里面是否有如下信息
 
 ```xml
-  <service android:enabled="true" android:name="com.baidu.location.f" android:process=":remote">
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2" />
-            </intent-filter>
-        </service>
-  <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="abcdefghijklmn" />
+<service android:enabled="true" android:name="com.baidu.location.f" android:process=":remote">
+          <intent-filter>
+              <action android:name="com.baidu.location.service_v2.2" />
+          </intent-filter>
+      </service>
+<meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="abcdefghijklmn" />
 ```
 
 如果没有，说明插件使用不当，尝试重新安装，如果有这些信息，说明Key与当前程序AndroidManifest.xml 中的package名不一致，请检查Key的申请信息是否正确
 
-####四，查看当前安装了哪些插件
+#### 四，查看当前安装了哪些插件
 
 ```shell
 cordova plugin ls
 ```
 
-####五，删除本插件
+#### 五，删除本插件
 
 ```shell
 cordova plugin rm cordova-plugin-baidumaplocation
 ```
-
-
-
-
-
-
-

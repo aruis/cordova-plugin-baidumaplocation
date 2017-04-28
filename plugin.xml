@@ -21,13 +21,17 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-baidumaplocation"
-        version="2.0.2">
+        version="2.0.3">
     <name>BadiduMap Location</name>
     <description>Cordova Geolocation Plugin,use Baidu Map SDK</description>
     <license>Apache 2.0</license>
     <keywords>cordova,baidu,location,geolocation</keywords>
     <repo>https://github.com/aruis/cordova-plugin-baidumaplocation</repo>
     <issue>https://github.com/aruis/cordova-plugin-baidumaplocation/issues</issue>
+    
+    <engines>
+        <engine name="cordova-android" version=">=5.0.0" />
+    </engines>
 
     <js-module src="www/baidumap_location.js" name="baidumap_location">
         <clobbers target="baidumap_location"/>
