@@ -87,6 +87,9 @@
         <source-file src="src/android/BaiduMapLocation.java" target-dir="src/com/aruistar/cordova/baidumap"/>
         <source-file src="libs/android/armeabi/liblocSDK7a.so" target-dir="libs/armeabi"/>
         <source-file src="libs/android/armeabi-v7a/liblocSDK7a.so" target-dir="libs/armeabi-v7a"/>
+        <source-file src="libs/android/arm64-v8a/liblocSDK7a.so" target-dir="libs/arm64-v8a"/>
+        <source-file src="libs/android/x86/liblocSDK7a.so" target-dir="libs/x86"/>
+        <source-file src="libs/android/x86_64/liblocSDK7a.so" target-dir="libs/x86_64"/>
         <source-file src="libs/android/BaiduLBS_Android.jar" target-dir="libs"/>
     </platform>
 
