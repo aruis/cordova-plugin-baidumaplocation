@@ -59,7 +59,7 @@ public class BaiduMapLocation extends CordovaPlugin {
                 json.put("locType", location.getLocType());
                 json.put("locTypeDescription", location.getLocTypeDescription());
                 json.put("latitude", location.getLatitude());
-                json.put("lontitude", location.getLongitude());
+                json.put("longitude", location.getLongitude());
                 json.put("radius", location.getRadius());
 
                 json.put("countryCode", location.getCountryCode());
