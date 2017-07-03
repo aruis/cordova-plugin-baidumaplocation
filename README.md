@@ -83,7 +83,7 @@ baidumap_location.getCurrentPosition(function (result) {
     "locType": 505,
     "locTypeDescription": "NetWork location failed because baidu location service check the key is unlegal, please check the key in AndroidManifest.xml !",
     "latitude": 5e-324,
-    "lontitude": 5e-324,
+    "longitude": 5e-324,
     "radius": 0,
     "userIndoorState": -1,
     "direction": -1
