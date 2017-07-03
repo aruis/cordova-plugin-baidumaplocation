@@ -56,7 +56,7 @@ baidumap_location.getCurrentPosition(function (result) {
 {
     "time": "2017-02-25 17:30:00",//获取时间
     "latitude": 34.6666666,//纬度
-    "lontitude": 117.8888,//经度
+    "longitude": 117.8888,//经度
     "radius": 61.9999999,//半径
  
     //--------Android 独享 begin
