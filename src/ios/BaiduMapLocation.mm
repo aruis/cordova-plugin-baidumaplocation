@@ -32,7 +32,7 @@
         NSDate* time = userLocation.location.timestamp;
         NSNumber* latitude = [NSNumber numberWithDouble:userLocation.location.coordinate.latitude];
         NSNumber* longitude = [NSNumber numberWithDouble:userLocation.location.coordinate.longitude];
-        NSNumber* altitude = [NSNumber numberWithDouble:userLocation.location.altitude];
+        //NSNumber* altitude = [NSNumber numberWithDouble:userLocation.location.altitude];
         NSNumber* radius = [NSNumber numberWithDouble:userLocation.location.horizontalAccuracy];
         NSString* title = userLocation.title;
         NSString* subtitle = userLocation.subtitle;
