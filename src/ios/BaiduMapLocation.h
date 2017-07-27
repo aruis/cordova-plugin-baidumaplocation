@@ -8,10 +8,13 @@
 
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>
 #import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
 
-@interface BaiduMapLocation : CDVPlugin<BMKLocationServiceDelegate> {
+@interface BaiduMapLocation : CDVPlugin<BMKLocationServiceDelegate, BMKGeoCodeSearchDelegate> {
     BMKLocationService* _locService;
+    BMKGeoCodeSearch* _geoCodeSerch;
     CDVInvokedUrlCommand* _execCommand;
+    NSMutableDictionary* _data;
 }
 
 

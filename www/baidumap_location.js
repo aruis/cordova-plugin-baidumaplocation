@@ -36,7 +36,7 @@ var baidumap_location = {
             // always truthy before we call into native
             timeoutTimer.timer = true;
         }
-        exec(win, fail, 'BaiduMapLocation', 'getCurrentPosition', options);
+        exec(win, fail, 'BaiduMapLocation', 'getCurrentPosition', [options]);
         return timeoutTimer
     }
 };
