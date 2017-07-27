@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-baidumaplocation",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Cordova Geolocation Plugin,use Baidu Map SDK",
   "cordova": {
     "id": "cordova-plugin-baidumaplocation",
@@ -24,11 +24,6 @@
   ],
   "author": "aruis",
   "license": "Apache-2.0",
-  "engines": {
-    "cordovaDependencies": {
-      "2.0.3": { "cordova-android": ">=5.0.0" }
-    }
-  },
   "bugs": {
     "url": "https://github.com/aruis/cordova-plugin-baidumaplocation/issues"
   },
