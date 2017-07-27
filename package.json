@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-baidumaplocation",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Cordova Geolocation Plugin,use Baidu Map SDK",
   "cordova": {
     "id": "cordova-plugin-baidumaplocation",
