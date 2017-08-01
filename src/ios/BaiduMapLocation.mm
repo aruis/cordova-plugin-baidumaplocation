@@ -84,6 +84,7 @@
          NSString* city = component.city;
          NSString* district = component.district;
          NSString* streetName = component.streetName;
+         NSString* province = component.province;
          NSString* addr = result.address;
          NSString* sematicDescription = result.sematicDescription;
  
@@ -93,6 +94,7 @@
         [_data setValue:city forKey:@"city"];
         [_data setValue:district forKey:@"district"];
         [_data setValue:streetName forKey:@"street"];
+        [_data setValue:province forKey:@"province"];
         [_data setValue:addr forKey:@"addr"];
         [_data setValue:sematicDescription forKey:@"locationDescribe"];
 
