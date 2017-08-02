@@ -60,14 +60,6 @@
         BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
         reverseGeocodeSearchOption.reverseGeoPoint = pt;
         BOOL flag = [_geoCodeSerch reverseGeoCode:reverseGeocodeSearchOption];
-        if(!flag)        
-        {
-            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:_data];
-            [result setKeepCallbackAsBool:TRUE];
-            [_locService stopUserLocationService];
-            [self.commandDelegate sendPluginResult:result callbackId:_execCommand.callbackId];
-            _execCommand = nil;
-        }
     }
 }
 
