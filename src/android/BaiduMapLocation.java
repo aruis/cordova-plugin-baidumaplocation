@@ -99,10 +99,6 @@ public class BaiduMapLocation extends CordovaPlugin {
             }
         }
 
-
-        @Override
-        public void onConnectHotSpotMessage(String s, int i) {
-        }
     };
 
     /**

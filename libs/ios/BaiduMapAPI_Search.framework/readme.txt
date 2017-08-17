@@ -5,7 +5,7 @@
 
 --------------------------------------------------------------------------------------
 
-iOS 地图 SDK v3.3.2是适用于iOS系统移动设备的矢量地图开发包
+iOS 地图 SDK v3.3.4是适用于iOS系统移动设备的矢量地图开发包
 
 --------------------------------------------------------------------------------------
 
@@ -47,6 +47,12 @@ LBS云检索：支持查询存储在LBS云内的自有数据；
  pod search BaiduMapKit  //查看最新地图SDK
  
  【 新 增 】
+ 1.BMKLocationViewDisplayParam类中增加 canShowCallOut 属性，用于设定用户点击定位图标时，是否弹出paopaoView。
+ 2.BMKLocationViewDisplayParam类中增加 locationViewHierarchy 属性，用于设定locationView始终处于视图层级的最下层或最上层。
+
  【 优 化 】
- 1.修复个性化地图在部分使用场景下，不显示的问题。（受影响版本v3.3.0、v3.3.1）
+ 1.修复添加Annotation时，Overlay偶尔绘制不完整的BUG。
+ 2.修复Swift调用SDK时，cityCode countryCode等字段类型不兼容的问题。
+ 3.保证新添加的Annotation会在mapView的视图层级的上层。
+ 4.DEMO中绘制路径规划结果时，修复计算显示区域的BUG。
 

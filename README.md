@@ -1,5 +1,7 @@
 # 百度地图定位Cordova插件，支持Android，IOS
 
+###UPDATE:
+* v3.2.0 升级对应百度定位依赖库（v7.2@Android,v3.3.4@IOS）
 
 ### 可以在此地址查看[example](https://github.com/aruis/testbmap-cordova-ionic)
 
@@ -20,7 +22,7 @@ __Android 版原作者[mrwutong](https://github.com/mrwutong)的话__
 >__此插件就这么诞生了__
 
 #### 零，版本
-基于百度地图Android版定位SDK（v7.1）以及百度地图IOS SDK （v3.2.1）
+基于百度地图Android版定位SDK（v7.2）以及百度地图IOS SDK （v3.3.4）
 
 #### 一，申请Android及IOS版密钥
 [申请密钥Android定位SDK](http://developer.baidu.com/map/index.php?title=android-locsdk/guide/key)
@@ -72,9 +74,9 @@ baidumap_location.getCurrentPosition(function (result) {
 }
 ```
 具体字段内容请参照：
->[Android版 BDLocation v7.1](http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.1/index.html)
+>[Android版 BDLocation v7.2](http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.2/index.html)
 
->[IOS版 BMKUserLocation](http://wiki.lbsyun.baidu.com/cms/iossdk/doc/v3_2_0/html/interface_b_m_k_user_location.html#aba4b76e55f4605c5554fe16aca1b4fbf) 
+>[IOS版 BMKUserLocation v3.3.4](http://wiki.lbsyun.baidu.com/cms/iossdk/doc/v3_3_4/html/interface_b_m_k_user_location.html#aba4b76e55f4605c5554fe16aca1b4fbf) 
 
 如果Android版获取到的信息是：
 
