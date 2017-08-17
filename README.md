@@ -73,6 +73,9 @@ baidumap_location.getCurrentPosition(function (result) {
     //--------IOS 独享 end
 }
 ```
+具体可参考如下截图
+![Android Screenshot](https://github.com/aruis/cordova-plugin-baidumaplocation/raw/master/android.jpg)
+![Android Screenshot](https://github.com/aruis/cordova-plugin-baidumaplocation/raw/master/ios.PNG)
 具体字段内容请参照：
 >[Android版 BDLocation v7.2](http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.2/index.html)
 
