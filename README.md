@@ -79,7 +79,7 @@ baidumap_location.getCurrentPosition(function (result) {
 
 
 ![Android Screenshot](https://github.com/aruis/cordova-plugin-baidumaplocation/raw/master/android.jpg)
-![Android Screenshot](https://github.com/aruis/cordova-plugin-baidumaplocation/raw/master/ios.PNG)
+![IOS Screenshot](https://github.com/aruis/cordova-plugin-baidumaplocation/raw/master/ios.PNG)
 
 
 具体字段内容请参照：
