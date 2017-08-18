@@ -1,4 +1,4 @@
-# 百度地图定位Cordova插件，支持Android，IOS
+# 百度地图定位Cordova插件，支持Android，IOS,ionic 1x 2x 均可使用
 
 ### UPDATE:
 * v3.2.0 升级对应百度定位依赖库（v7.2@Android,v3.3.4@IOS）
