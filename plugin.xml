@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-baidumaplocation"
-        version="3.2.0">
+        version="4.0.1">
     <name>BadiduMap Location</name>
     <description>Cordova Geolocation Plugin,use Baidu Map SDK</description>
     <license>Apache 2.0</license>
@@ -34,6 +34,8 @@
     </engines>
 
     <js-module src="www/baidumap_location.js" name="baidumap_location">
+        <clobbers target="cordova.plugins.baidumap_location" />
+        <clobbers target="plugin.baidumap_location" />
         <clobbers target="baidumap_location"/>
     </js-module>
 
@@ -76,20 +78,21 @@
                     android:name="com.baidu.location.f"
                     android:enabled="true"
                     android:process=":remote">
-                <intent-filter>
-                    <action android:name="com.baidu.location.service_v2.2">
-                    </action>
-                </intent-filter>
             </service>
             <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="$ANDROID_KEY"/>
         </config-file>
 
         <source-file src="src/android/BaiduMapLocation.java" target-dir="app/src/com/aruistar/cordova/baidumap"/>
-        <source-file src="libs/android/armeabi/liblocSDK7a.so" target-dir="app/libs/armeabi"/>
-        <source-file src="libs/android/armeabi-v7a/liblocSDK7a.so" target-dir="app/libs/armeabi-v7a"/>
-        <source-file src="libs/android/arm64-v8a/liblocSDK7a.so" target-dir="app/libs/arm64-v8a"/>
-        <source-file src="libs/android/x86/liblocSDK7a.so" target-dir="app/libs/x86"/>
-        <source-file src="libs/android/x86_64/liblocSDK7a.so" target-dir="app/libs/x86_64"/>
+        <source-file src="libs/android/armeabi/libindoor.so" target-dir="app/libs/armeabi"/>
+        <source-file src="libs/android/armeabi/liblocSDK7b.so" target-dir="app/libs/armeabi"/>
+        <source-file src="libs/android/armeabi-v7a/libindoor.so" target-dir="app/libs/armeabi-v7a"/>
+        <source-file src="libs/android/armeabi-v7a/liblocSDK7b.so" target-dir="app/libs/armeabi-v7a"/>
+        <source-file src="libs/android/arm64-v8a/libindoor.so" target-dir="app/libs/arm64-v8a"/>
+        <source-file src="libs/android/arm64-v8a/liblocSDK7b.so" target-dir="app/libs/arm64-v8a"/>
+        <source-file src="libs/android/x86/libindoor.so" target-dir="app/libs/x86"/>
+        <source-file src="libs/android/x86/liblocSDK7b.so" target-dir="app/libs/x86"/>
+        <source-file src="libs/android/x86_64/libindoor.so" target-dir="app/libs/x86_64"/>
+        <source-file src="libs/android/x86_64/liblocSDK7b.so" target-dir="app/libs/x86_64"/>
         <source-file src="libs/android/BaiduLBS_Android.jar" target-dir="app/libs"/>
     </platform>
 

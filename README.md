@@ -1,9 +1,10 @@
 # 百度地图定位Cordova插件，支持Android，IOS，ionic 1x 2x 均可使用
 
 ### UPDATE:
+* v4.0.1 优化了ionic3x的兼容性，升级对应百度定位依赖库（v7.5@Android）
 * v3.2.0 升级对应百度定位依赖库（v7.2@Android,v3.3.4@IOS）
 
-### 可以在此地址查看[example](https://github.com/aruis/testbmap-cordova-ionic)
+### 可以在此地址查看[ionic3_example](https://github.com/aruis/testbmap-cordova-ionic3)
 
 __致谢: 本插件Android开发主要参考 [cordova-qdc-baidu-location](https://github.com/liangzhenghui/cordova-qdc-baidu-location),感谢[liangzhenghui](https://github.com/liangzhenghui)；IOS开发主要参考[cordova-plugin-bdlocation](https://github.com/wilhantian/cordova-plugin-bdlocation)，感谢[wilhantian](https://github.com/wilhantian)__
 
@@ -105,10 +106,7 @@ baidumap_location.getCurrentPosition(function (result) {
 
 ```xml
 <service android:enabled="true" android:name="com.baidu.location.f" android:process=":remote">
-          <intent-filter>
-              <action android:name="com.baidu.location.service_v2.2" />
-          </intent-filter>
-      </service>
+</service>
 <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="abcdefghijklmn" />
 ```
 
@@ -125,3 +123,4 @@ cordova plugin ls
 ```shell
 cordova plugin rm cordova-plugin-baidumaplocation
 ```
+#### 至ionic3用户，如何在ionic3项目中使用非ionic维护的cordova插件，可以参考：[https://stackoverflow.com/questions/37942202/using-a-third-party-cordova-plugin-in-ionic-2-with-typescript](https://stackoverflow.com/questions/37942202/using-a-third-party-cordova-plugin-in-ionic-2-with-typescript)
