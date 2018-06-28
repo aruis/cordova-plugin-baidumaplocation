@@ -81,7 +81,8 @@
             </service>
             <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="$ANDROID_KEY"/>
         </config-file>
-
+        
+        <framework src="src/android/BaiduMapLocation.gradle" custom="true" type="gradleReference"/>
         <source-file src="src/android/BaiduMapLocation.java" target-dir="app/src/com/aruistar/cordova/baidumap"/>
         <source-file src="libs/android/armeabi/libindoor.so" target-dir="app/libs/armeabi"/>
         <source-file src="libs/android/armeabi/liblocSDK7b.so" target-dir="app/libs/armeabi"/>
