@@ -1,6 +1,7 @@
 # 百度地图定位Cordova插件，支持Android，IOS，ionic 1x 2x 均可使用
 
 ### UPDATE:
+* v4.0.2 修复Android Studio项目或新版本Cordova找不到so文件的问题
 * v4.0.1 优化了ionic3x的兼容性，升级对应百度定位依赖库（v7.5@Android）
 * v3.2.0 升级对应百度定位依赖库（v7.2@Android,v3.3.4@IOS）
 
