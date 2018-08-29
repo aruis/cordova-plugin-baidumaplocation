@@ -42,6 +42,7 @@
     <preference name="ANDROID_KEY" default=""/>
     <preference name="IOS_KEY" default=""/>
     <preference name="IOS_LOCATION_DESC" default="请点击'好'以允许访问。"/>
+    <preference name="IOS_ALWAYS_LOCATION_DESC" default="持续获取地理位置"/>
 
     <!-- android -->
     <platform name="android">
@@ -117,6 +118,9 @@
         <!--NSLocationAlwaysUsageDescription / NSLocationWhenInUseUsageDescription-->
         <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
             <string>$IOS_LOCATION_DESC</string>
+        </config-file>
+        <config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist">
+            <string>$IOS_ALWAYS_LOCATION_DESC</string>
         </config-file>
 
         <!--API_KEY-->
