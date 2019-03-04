@@ -20,7 +20,7 @@ typedef NS_OPTIONS(NSUInteger, BMKGeoFenceActiveAction)
 };
 
 ///BMKGeoFence errorDomain
-FOUNDATION_EXPORT NSErrorDomain const BMKGeoFenceErrorDomain;
+FOUNDATION_EXPORT NSErrorDomain const _Nonnull BMKGeoFenceErrorDomain;
 
 ///地理围栏错误码
 typedef NS_ENUM(NSInteger, BMKGeoFenceErrorCode) {

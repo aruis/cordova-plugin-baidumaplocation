@@ -6,19 +6,15 @@
 
 #import <Cordova/CDV.h>
 
-#import <BaiduMapAPI_Base/BMKBaseComponent.h>
-#import <BaiduMapAPI_Location/BMKLocationComponent.h>
-#import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BMKLocationKit/BMKLocationComponent.h>
 
-@interface BaiduMapLocation : CDVPlugin<BMKLocationServiceDelegate, BMKGeoCodeSearchDelegate> {
-    BMKLocationService* _locService;
-    BMKGeoCodeSearch* _geoCodeSerch;
+@interface BaiduMapLocation : CDVPlugin<BMKLocationManagerDelegate> {
+    BMKLocationManager* _localManager;
     CDVInvokedUrlCommand* _execCommand;
-    NSMutableDictionary* _data;
 }
 
 
 - (void)getCurrentPosition:(CDVInvokedUrlCommand*)command;
-- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation;
+- (void)BMKLocationManager:(BMKLocationManager *)manager didUpdateLocation:(BMKLocation *)userLocation orError:(NSError *)error;
 
 @end

@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-baidumaplocation"
-        version="4.0.2">
+        version="4.0.3">
     <name>BadiduMap Location</name>
     <description>Cordova Geolocation Plugin,use Baidu Map SDK</description>
     <license>Apache 2.0</license>
@@ -136,9 +136,7 @@
         <source-file src="src/ios/BaiduMapLocation.mm"/>
 
         <!--库文件-->
-        <framework src="libs/ios/BaiduMapAPI_Base.framework" custom="true"/>
-        <framework src="libs/ios/BaiduMapAPI_Location.framework" custom="true"/>
-        <framework src="libs/ios/BaiduMapAPI_Search.framework" custom="true"/>
+        <framework src="libs/ios/BMKLocationKit.framework" custom="true"/>
         <source-file src="libs/ios/thirdlibs/libcrypto.a" framework="true"/>
         <source-file src="libs/ios/thirdlibs/libssl.a" framework="true"/>
 
@@ -146,6 +144,8 @@
         <framework src="SystemConfiguration.framework"/>
         <framework src="libsqlite3.0.tbd"/>
         <framework src="CoreTelephony.framework"/>
+		<framework src="libc++.tbd"/>
+		<framework src="AdSupport.framework"/>
     </platform>
 
 </plugin>
