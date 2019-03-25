@@ -39,22 +39,19 @@ typedef NS_ENUM(int, BMKLocationNetworkState) {
 
 ///BMKLocation errorDomain
 
-FOUNDATION_EXPORT NSErrorDomain const BMKLocationErrorDomain;
+FOUNDATION_EXPORT NSErrorDomain const _Nonnull BMKLocationErrorDomain;
 
 ///BMKLocation errorCode
 typedef NS_ENUM(NSInteger, BMKLocationErrorCode)
 {
-    BMKLocationErrorUnknown = 1,               ///<未知错误
-    BMKLocationErrorLocateFailed = 2,          ///<定位错误
-    BMKLocationErrorReGeocodeFailed  = 3,      ///<逆地理错误
-    BMKLocationErrorTimeOut = 4,               ///<超时
-    BMKLocationErrorCanceled = 5,              ///<取消
-    BMKLocationErrorCannotFindHost = 6,        ///<找不到主机
-    BMKLocationErrorBadURL = 7,                ///<URL异常
-    BMKLocationErrorNotConnectedToInternet = 8,///<连接异常
-    BMKLocationErrorCannotConnectToHost = 9,   ///<服务器连接失败
-    BMKLocationErrorHeadingFailed = 10,        ///<获取方向失败
-    BMKLocationErrorFailureAuth  = 11,         ///<鉴权失败
+    BMKLocationErrorUnKnown = 0,                   ///<未知异常
+    BMKLocationErrorLocFailed = 1,                 ///<位置未知，持续定位中
+    BMKLocationErrorDenied = 2,                    ///<手机不允许定位，请确认用户授予定位权限或者手机是否打开定位开关
+    BMKLocationErrorNetWork = 3,                   ///<因为网络原因导致系统定位失败
+    BMKLocationErrorHeadingFailed = 4,             ///<获取手机方向信息失败
+    BMKLocationErrorGetExtraNetworkFailed  = 5,    ///<网络原因导致获取额外信息（地址、网络状态等信息）失败
+    BMKLocationErrorGetExtraParseFailed  = 6,      ///<网络返回数据解析失败导致获取额外信息（地址、网络状态等信息）失败
+    BMKLocationErrorFailureAuth  = 7,              ///<鉴权失败导致无法返回定位、地址等信息
 };
 
 
@@ -107,6 +104,12 @@ typedef void (^BMKLocatingCompletionBlock)(BMKLocation * _Nullable location, BMK
 ///连续定位是否返回逆地理信息，默认YES。
 @property (nonatomic, assign) BOOL locatingWithReGeocode;
 
+///定位sdk-v1.3之后，开发者可以选择是否需要最新版本rgc数据，默认是不需要NO；YES的情况下，定位sdk会实时返回最新的rgc数据，如城市变更等数据都会实时更新
+@property (nonatomic, assign) BOOL isNeedNewVersionReGeocode;
+
+
+///开发者可以指定该用户的id，用于后续统一识别用户，便于查找问题
+@property(nonatomic, retain, nullable) NSString * userID;
 
 
 /**

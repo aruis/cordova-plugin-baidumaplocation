@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-baidumaplocation"
-        version="4.0.2">
+        version="4.0.3">
     <name>BadiduMap Location</name>
     <description>Cordova Geolocation Plugin,use Baidu Map SDK</description>
     <license>Apache 2.0</license>
@@ -41,7 +41,8 @@
 
     <preference name="ANDROID_KEY" default=""/>
     <preference name="IOS_KEY" default=""/>
-    <preference name="IOS_LOCATION_DESC" default="请点击'好'以允许访问。"/>
+    <preference name="IOS_LOCATION_DESC" default="获取用户当前位置"/>
+    <preference name="IOS_ALWAYS_LOCATION_DESC" default="持续获取地理位置"/>
 
     <!-- android -->
     <platform name="android">
@@ -118,6 +119,9 @@
         <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
             <string>$IOS_LOCATION_DESC</string>
         </config-file>
+        <config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist">
+            <string>$IOS_ALWAYS_LOCATION_DESC</string>
+        </config-file>
 
         <!--API_KEY-->
         <config-file parent="BaiduMapLocation" target="*-Info.plist">
@@ -132,9 +136,7 @@
         <source-file src="src/ios/BaiduMapLocation.mm"/>
 
         <!--库文件-->
-        <framework src="libs/ios/BaiduMapAPI_Base.framework" custom="true"/>
-        <framework src="libs/ios/BaiduMapAPI_Location.framework" custom="true"/>
-        <framework src="libs/ios/BaiduMapAPI_Search.framework" custom="true"/>
+        <framework src="libs/ios/BMKLocationKit.framework" custom="true"/>
         <source-file src="libs/ios/thirdlibs/libcrypto.a" framework="true"/>
         <source-file src="libs/ios/thirdlibs/libssl.a" framework="true"/>
 
@@ -142,6 +144,8 @@
         <framework src="SystemConfiguration.framework"/>
         <framework src="libsqlite3.0.tbd"/>
         <framework src="CoreTelephony.framework"/>
+		<framework src="libc++.tbd"/>
+		<framework src="AdSupport.framework"/>
     </platform>
 
 </plugin>

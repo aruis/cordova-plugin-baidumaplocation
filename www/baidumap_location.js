@@ -37,7 +37,6 @@ var baidumap_location = {
             timeoutTimer.timer = true;
         }
         exec(win, fail, 'BaiduMapLocation', 'getCurrentPosition', [options]);
-        return timeoutTimer
     }
 };
 
